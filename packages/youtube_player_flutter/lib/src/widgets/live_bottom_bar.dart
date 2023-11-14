@@ -84,7 +84,7 @@ class _LiveBottomBarState extends State<LiveBottomBar> {
           Expanded(
             child: Padding(
               child: Slider(
-                value: _currentSliderPosition,
+                value: max(min(_currentSliderPosition, 1), 0),
                 onChanged: (value) {
                   _controller.seekTo(
                     Duration(
