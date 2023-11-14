@@ -46,9 +46,9 @@ class _PlayPauseButtonState extends State<PlayPauseButton>
     final controller = YoutubePlayerController.of(context);
     if (controller == null) {
       assert(
-        widget.controller != null,
-        '\n\nNo controller could be found in the provided context.\n\n'
-        'Try passing the controller explicitly.',
+      widget.controller != null,
+      '\n\nNo controller could be found in the provided context.\n\n'
+          'Try passing the controller explicitly.',
       );
       _controller = widget.controller!;
     } else {
@@ -83,9 +83,22 @@ class _PlayPauseButtonState extends State<PlayPauseButton>
           color: Colors.transparent,
           child: InkWell(
             borderRadius: BorderRadius.circular(50.0),
-            onTap: () => _controller.value.isPlaying
-                ? _controller.pause()
-                : _controller.play(),
+            onTap: () {
+              _controller!.updateValue(
+                _controller!.value.copyWith(
+                  isStartThumbnail: true,
+                ),
+              );
+              Future.delayed(Duration(milliseconds: 500), () {
+                _controller.value.isPlaying
+                    ? _controller.pause()
+                    : _controller.play();
+              });
+
+            },
+            // onTap: () => _controller.value.isPlaying
+            //     ? _controller.pause()
+            //     : _controller.play(),
             child: AnimatedIcon(
               icon: AnimatedIcons.play_pause,
               progress: _animController.view,

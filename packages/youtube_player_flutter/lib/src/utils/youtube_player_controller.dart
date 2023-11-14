@@ -23,6 +23,8 @@ class YoutubePlayerValue {
     this.position = const Duration(),
     this.buffered = 0.0,
     this.isPlaying = false,
+    this.isLoaded = false,
+    this.isStartThumbnail = false,
     this.isFullScreen = false,
     this.volume = 100,
     this.playerState = PlayerState.unknown,
@@ -51,6 +53,10 @@ class YoutubePlayerValue {
 
   /// Reports true if video is playing.
   final bool isPlaying;
+
+  final bool isLoaded;
+
+  final bool isStartThumbnail;
 
   /// Reports true if video is fullscreen.
   final bool isFullScreen;
@@ -94,6 +100,7 @@ class YoutubePlayerValue {
     Duration? position,
     double? buffered,
     bool? isPlaying,
+    bool? isStartThumbnail,
     bool? isFullScreen,
     int? volume,
     PlayerState? playerState,
@@ -111,6 +118,8 @@ class YoutubePlayerValue {
       position: position ?? this.position,
       buffered: buffered ?? this.buffered,
       isPlaying: isPlaying ?? this.isPlaying,
+      isLoaded: isLoaded ?? this.isLoaded,
+      isStartThumbnail: isStartThumbnail ?? this.isStartThumbnail,
       isFullScreen: isFullScreen ?? this.isFullScreen,
       volume: volume ?? this.volume,
       playerState: playerState ?? this.playerState,
@@ -295,21 +304,22 @@ class YoutubePlayerController extends ValueNotifier<YoutubePlayerValue> {
 
   /// Resets the value of [YoutubePlayerController].
   void reset() => updateValue(
-        value.copyWith(
-          isReady: false,
-          isFullScreen: false,
-          isControlsVisible: false,
-          playerState: PlayerState.unknown,
-          hasPlayed: false,
-          position: Duration.zero,
-          buffered: 0.0,
-          errorCode: 0,
-          isLoaded: false,
-          isPlaying: false,
-          isDragging: false,
-          metaData: const YoutubeMetaData(),
-        ),
-      );
+    value.copyWith(
+      isReady: false,
+      isFullScreen: false,
+      isControlsVisible: false,
+      playerState: PlayerState.unknown,
+      hasPlayed: false,
+      position: Duration.zero,
+      buffered: 0.0,
+      errorCode: 0,
+      isLoaded: false,
+      isPlaying: false,
+      isStartThumbnail: false,
+      isDragging: false,
+      metaData: const YoutubeMetaData(),
+    ),
+  );
 }
 
 /// An inherited widget to provide [YoutubePlayerController] to it's descendants.

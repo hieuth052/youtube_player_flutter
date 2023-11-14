@@ -124,8 +124,8 @@ class _RawYoutubePlayerState extends State<RawYoutubePlayer>
                   case -1:
                     controller!.updateValue(
                       controller!.value.copyWith(
-                        playerState: PlayerState.unStarted,
-                        isLoaded: true,
+                          playerState: PlayerState.unStarted,
+                          isStartThumbnail: true
                       ),
                     );
                     break;
@@ -138,14 +138,34 @@ class _RawYoutubePlayerState extends State<RawYoutubePlayer>
                     );
                     break;
                   case 1:
-                    controller!.updateValue(
-                      controller!.value.copyWith(
-                        playerState: PlayerState.playing,
-                        isPlaying: true,
-                        hasPlayed: true,
-                        errorCode: 0,
-                      ),
-                    );
+                    if (controller!.value.isLoaded == false){
+                      controller!.updateValue(
+                        controller!.value.copyWith(
+                          playerState: PlayerState.playing,
+                          isPlaying: true,
+                          hasPlayed: true,
+                          isLoaded: true,
+                          errorCode: 0,
+                        ),
+                      );
+                      Future.delayed(Duration(milliseconds: 3100), () {
+                        controller!.updateValue(
+                          controller!.value.copyWith(
+                            isStartThumbnail: false,
+                          ),
+                        );
+                      });
+                    } else {
+                      controller!.updateValue(
+                        controller!.value.copyWith(
+                          playerState: PlayerState.playing,
+                          isPlaying: true,
+                          isStartThumbnail: false,
+                          hasPlayed: true,
+                          errorCode: 0,
+                        ),
+                      );
+                    }
                     break;
                   case 2:
                     controller!.updateValue(
