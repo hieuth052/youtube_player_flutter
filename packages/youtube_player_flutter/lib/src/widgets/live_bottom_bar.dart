@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../utils/youtube_player_controller.dart';
 import 'duration_widgets.dart';
 import 'full_screen_button.dart';
+import 'dart:math';
 
 /// A widget to display bottom controls bar on Live Video Mode.
 class LiveBottomBar extends StatefulWidget {
@@ -84,7 +85,7 @@ class _LiveBottomBarState extends State<LiveBottomBar> {
           Expanded(
             child: Padding(
               child: Slider(
-                value: _currentSliderPosition,
+                value: max(min(_currentSliderPosition, 1), 0),
                 onChanged: (value) {
                   _controller.seekTo(
                     Duration(
